@@ -1,6 +1,6 @@
 # Browser build and itch.io deployment
 
-Use Node.js 22. Install with `npm ci`, then run `npm test`, `npm run build`, and `npm run package:itch`. The upload artifact is `artifacts/mathventures-web.zip`; `index.html` is directly at its root. The package task validates explicit HTML/CSS/module references, case-sensitive asset paths and itch archive limits. It rejects obvious external runtime loaders; dynamic URL construction still requires browser inspection. Preview the production build with `npm run preview` before uploading.
+Use Node.js 22. From the repository root, enter `games/mathventures/`; all commands and relative paths in this guide use that game directory. Install with `npm ci`, then run `npm test`, `npm run build`, and `npm run package:itch`. The upload artifact is `artifacts/mathventures-web.zip` inside the game directory; `index.html` is directly at its archive root. The package task validates explicit HTML/CSS/module references, case-sensitive asset paths and itch archive limits. It rejects obvious external runtime loaders; dynamic URL construction still requires browser inspection. Preview the production build with `npm run preview` before uploading.
 
 ## Manual first upload
 
