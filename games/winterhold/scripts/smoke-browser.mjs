@@ -1,0 +1,61 @@
+import { browserHarness, watchErrors, walkTo } from './browser-harness.mjs';
+
+await browserHarness(async ({ browser, server, assert }) => {
+  const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, reducedMotion: 'reduce' });
+  const page = await context.newPage();
+  const errors = watchErrors(page, server.origin);
+  const count = async id => Number((await page.locator(id).innerText()).match(/\d+/)?.[0]);
+  await page.goto(server.url, { waitUntil: 'networkidle' });
+  await page.locator('#game-world canvas').waitFor();
+  await page.locator('#start-game').click();
+  await page.locator('#build-barracks').click();
+  const guards = await count('#guard-count');
+  await page.locator('#train-button').click();
+  assert.equal(await count('#guard-count'), guards + 1, 'training creates a guard');
+  await page.locator('#pause-button').click();
+  const timer = await page.locator('#winter-timer').innerText();
+  for (const code of ['KeyP', 'Escape']) {
+    await page.evaluate(code => window.dispatchEvent(new KeyboardEvent('keydown', { code, key: code === 'KeyP' ? 'p' : 'Escape', repeat: true, bubbles: true })), code);
+    assert.equal(await page.locator('#modal').isVisible(), true, 'key repeat cannot dismiss the pause screen');
+  }
+  await page.waitForTimeout(1300);
+  assert.equal(await page.locator('#winter-timer').innerText(), timer, 'paused winter timer freezes');
+  await page.locator('#resume-game').click();
+  await walkTo(page, 1000, 1260);
+  assert.match(await page.locator('#action-label').innerText(), /Gather wood/, 'keeper reaches a visible wood source');
+  assert.equal(await page.locator('#build-shelter').isDisabled(), true, 'building requires hearth proximity');
+  const wood = await count('#wood-count');
+  await page.keyboard.down('Space');
+  await page.waitForTimeout(2300);
+  await page.keyboard.up('Space');
+  assert.ok(await count('#wood-count') > wood, 'visible nearby gathering increases wood');
+  // A real held pointer gathers repeatedly; a second pointer cannot take its ownership.
+  const gather = await page.locator('#action-button').boundingBox();
+  assert.ok(gather);
+  await page.mouse.move(gather.x + gather.width / 2, gather.y + gather.height / 2);
+  await page.mouse.down();
+  await page.locator('#action-button').dispatchEvent('pointerdown', { pointerId: 42, pointerType: 'touch', isPrimary: false, bubbles: true });
+  await page.waitForTimeout(750);
+  await page.locator('#action-button').dispatchEvent('pointercancel', { pointerId: 1, pointerType: 'mouse', bubbles: true });
+  await page.mouse.up();
+  await page.waitForTimeout(200);
+  const cancelledWood = await count('#wood-count');
+  await page.waitForTimeout(850);
+  assert.equal(await count('#wood-count'), cancelledWood, 'pointer cancellation stops gathering even after another pointer arrives');
+  await page.screenshot({ path: 'artifacts/desktop-exploration.png', fullPage: true });
+  await walkTo(page, 800, 990);
+  const settlers = await count('#settler-count');
+  await page.locator('#action-button').click();
+  assert.equal(await count('#settler-count'), settlers + 1, 'camp recruits a settler');
+  await page.waitForTimeout(850);
+  assert.equal(await count('#settler-count'), settlers + 1, 'recruit click never repeats');
+  await walkTo(page, 1300, 1130);
+  assert.equal(await page.locator('#build-shelter').isDisabled(), false, 'building becomes available at hearth');
+  const beforeBuild = await count('#wood-count');
+  await page.locator('#build-shelter').click();
+  assert.equal(await count('#wood-count'), beforeBuild - 16, 'longhouse spends its displayed wood cost');
+  await page.screenshot({ path: 'artifacts/desktop-settlement.png', fullPage: true });
+  assert.deepEqual(errors, [], 'browser runtime errors');
+  await context.close();
+  console.log('Desktop: start, build, train, pause, explore, gather, recruit, and return verified.');
+});

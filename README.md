@@ -5,6 +5,7 @@ A collection of browser game prototypes. Each game lives in its own directory un
 | Game | Directory | Description |
 | --- | --- | --- |
 | Mathventures · The Glimmerwood Trials | [games/mathventures](games/mathventures/) | An arithmetic adventure with four woodland guardians, two difficulty modes, and local progress saves. |
+| Winterhold · The Last Hearth | [games/winterhold](games/winterhold/) | Explore a bright valley, gather supplies, recruit settlers, and defend a growing refuge against the first winter horde. |
 
 ## Run Mathventures
 
@@ -17,6 +18,16 @@ npm run dev
 ```
 
 Open the local address printed by Vite. See the [game README](games/mathventures/README.md) for controls, rules, and progress saving.
+
+## Run Winterhold
+
+```sh
+cd games/winterhold
+npm ci
+npm run dev
+```
+
+Winterhold is an independent 3–4 minute exploration and settlement defense game with keyboard and touch controls. See its [game README](games/winterhold/README.md) for controls, rules, and building costs. Run validation and distribution commands from that game directory as well; its itch.io archive is `games/winterhold/artifacts/winterhold-web.zip`.
 
 ## Validate and build
 
@@ -35,6 +46,14 @@ The build is written to `games/mathventures/dist/` and the upload archive to `ga
 ```text
 games/
   mathventures/
+    src/
+    tests/
+    scripts/
+    docs/
+    package.json
+    package-lock.json
+    README.md
+  winterhold/
     src/
     tests/
     scripts/

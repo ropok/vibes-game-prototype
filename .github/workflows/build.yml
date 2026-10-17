@@ -8,22 +8,25 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        game: [mathventures, winterhold]
     defaults:
       run:
-        working-directory: games/mathventures
+        working-directory: games/${{ matrix.game }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: npm
-          cache-dependency-path: games/mathventures/package-lock.json
+          cache-dependency-path: games/${{ matrix.game }}/package-lock.json
       - run: npm ci
       - run: npm test
       - run: npm run build
       - run: npm run package:itch
       - uses: actions/upload-artifact@v4
         with:
-          name: mathventures-web
-          path: games/mathventures/artifacts/mathventures-web.zip
+          name: ${{ matrix.game }}-web
+          path: games/${{ matrix.game }}/artifacts/${{ matrix.game }}-web.zip
           if-no-files-found: error

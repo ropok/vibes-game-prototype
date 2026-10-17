@@ -1,0 +1,46 @@
+name: Deploy Winterhold to itch.io manually
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: itch-winterhold-deployment
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: itch-winterhold
+    defaults:
+      run:
+        working-directory: games/winterhold
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: games/winterhold/package-lock.json
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - run: npm run package:itch
+      - name: Download official butler
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --proto '=https' --proto-redir '=https' --retry 3 https://broth.itch.zone/butler/linux-amd64/LATEST/archive/default --output "$RUNNER_TEMP/butler.zip"
+          mkdir -p "$RUNNER_TEMP/butler"
+          unzip -q "$RUNNER_TEMP/butler.zip" -d "$RUNNER_TEMP/butler"
+          chmod +x "$RUNNER_TEMP/butler/butler"
+          "$RUNNER_TEMP/butler/butler" version
+      - name: Upload browser channel
+        shell: bash
+        env:
+          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+          ITCH_TARGET: ${{ vars.ITCH_TARGET }}
+        run: |
+          set -euo pipefail
+          test -n "$BUTLER_API_KEY" || { echo 'Missing BUTLER_API_KEY secret'; exit 1; }
+          [[ "$ITCH_TARGET" =~ ^[a-z0-9_-]+/[a-z0-9_-]+$ ]] || { echo 'ITCH_TARGET must be username/game-slug'; exit 1; }
+          "$RUNNER_TEMP/butler/butler" push dist "$ITCH_TARGET:html5" --userversion "$GITHUB_SHA"
+
