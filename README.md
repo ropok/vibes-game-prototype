@@ -6,6 +6,7 @@ A collection of browser game prototypes. Each game lives in its own directory un
 | --- | --- | --- |
 | Mathventures · The Glimmerwood Trials | [games/mathventures](games/mathventures/) | An arithmetic adventure with four woodland guardians, two difficulty modes, and local progress saves. |
 | Winterhold · The Last Hearth | [games/winterhold](games/winterhold/) | Explore a bright valley, gather supplies, recruit settlers, and defend a growing refuge against the first winter horde. |
+| MBG Evolution | [games/mbg-evolution](games/mbg-evolution/) | A comic kitchen evolution game in Indonesian: hit roaming food, absorb its energy, and discover 12 original creatures, from Ompreng Kosong to Kopdes. |
 
 ## Run Mathventures
 
@@ -29,7 +30,17 @@ npm run dev
 
 Winterhold is an independent 3–4 minute exploration and settlement defense game with keyboard and touch controls. See its [game README](games/winterhold/README.md) for controls, rules, and building costs. Run validation and distribution commands from that game directory as well; its itch.io archive is `games/winterhold/artifacts/winterhold-web.zip`.
 
-## Validate and build
+## Run MBG Evolution
+
+```sh
+cd games/mbg-evolution
+npm ci
+npm run dev
+```
+
+MBG Evolution is an independent browser game with touch, mouse, and keyboard controls, a complete 100-absorption campaign, an illustrated evolution book, and local progress saves. See the [game README](games/mbg-evolution/README.md) for rules and the [deployment guide](games/mbg-evolution/docs/DEPLOYMENT.md) for the standalone itch.io package.
+
+## Validate and build Mathventures
 
 Run these commands from `games/mathventures/`:
 
@@ -54,6 +65,14 @@ games/
     package-lock.json
     README.md
   winterhold/
+    src/
+    tests/
+    scripts/
+    docs/
+    package.json
+    package-lock.json
+    README.md
+  mbg-evolution/
     src/
     tests/
     scripts/
