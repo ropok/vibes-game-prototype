@@ -30,7 +30,3 @@ export async function startProductionServer() {
   const origin = `http://127.0.0.1:${server.address().port}`;
   return { origin, url: `${origin}${mount}`, close: () => new Promise((resolve, reject) => server.close(error => error ? reject(error) : resolve())) };
 }
-
-
-
-\n

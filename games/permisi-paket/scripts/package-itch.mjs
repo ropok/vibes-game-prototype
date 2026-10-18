@@ -60,7 +60,3 @@ const archive = zipSync(Object.fromEntries(files), { level: 6 });
 await mkdir(path.join(root, 'artifacts'), { recursive: true });
 await writeFile(path.join(root, 'artifacts/permisi-paket-web.zip'), archive);
 console.log(`Packaged ${files.size} files (${archive.length} bytes) to artifacts/permisi-paket-web.zip`);
-
-
-
-\n
