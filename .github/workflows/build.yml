@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        game: [mathventures, winterhold]
+        game: [mathventures, winterhold, mbg-evolution]
     defaults:
       run:
         working-directory: games/${{ matrix.game }}
