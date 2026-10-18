@@ -1,0 +1,20 @@
+{
+  "name": "permisi-paket",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "test": "node --test",
+    "package:itch": "node scripts/package-itch.mjs",
+    "smoke": "node scripts/smoke-browser.mjs",
+    "smoke:browser": "node scripts/smoke-browser.mjs",
+    "smoke:layout": "node scripts/smoke-layout.mjs",
+    "smoke:shout": "node scripts/smoke-shout.mjs",
+    "smoke:sprites": "node scripts/smoke-sprites.mjs"
+  },
+  "dependencies": { "phaser": "^3.90.0" },
+  "devDependencies": { "vite": "^7.1.7", "fflate": "^0.8.2", "es-module-lexer": "^1.7.0" }
+}

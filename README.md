@@ -7,6 +7,7 @@ A collection of browser game prototypes. Each game lives in its own directory un
 | Mathventures · The Glimmerwood Trials | [games/mathventures](games/mathventures/) | An arithmetic adventure with four woodland guardians, two difficulty modes, and local progress saves. |
 | Winterhold · The Last Hearth | [games/winterhold](games/winterhold/) | Explore a bright valley, gather supplies, recruit settlers, and defend a growing refuge against the first winter horde. |
 | MBG Evolution | [games/mbg-evolution](games/mbg-evolution/) | A comic kitchen evolution game in Indonesian: hit roaming food, absorb its energy, and discover 12 original creatures, from Ompreng Kosong to Kopdes. |
+| Permisi Paket! | [games/permisi-paket](games/permisi-paket/) | Explore three Indonesian neighborhoods as a courier: deliver packages, follow the minimap, avoid traffic, and upgrade your gear with keyboard or touch controls. |
 
 ## Run Mathventures
 
@@ -39,6 +40,16 @@ npm run dev
 ```
 
 MBG Evolution is an independent browser game with touch, mouse, and keyboard controls, a complete 100-absorption campaign, an illustrated evolution book, and local progress saves. See the [game README](games/mbg-evolution/README.md) for rules and the [deployment guide](games/mbg-evolution/docs/DEPLOYMENT.md) for the standalone itch.io package.
+
+## Run Permisi Paket!
+
+```sh
+cd games/permisi-paket
+npm ci
+npm run dev
+```
+
+Permisi Paket! is a mobile-friendly courier adventure with 18 homes, a camera that follows the player through a connected town, a minimap, four upgrade paths, and local progress saves. See the [game README](games/permisi-paket/README.md), [design document](games/permisi-paket/docs/GDD.md), and [deployment guide](games/permisi-paket/docs/DEPLOYMENT.md).
 
 ## Validate and build Mathventures
 
@@ -73,6 +84,14 @@ games/
     package-lock.json
     README.md
   mbg-evolution/
+    src/
+    tests/
+    scripts/
+    docs/
+    package.json
+    package-lock.json
+    README.md
+  permisi-paket/
     src/
     tests/
     scripts/
