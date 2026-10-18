@@ -8,6 +8,7 @@ A collection of browser game prototypes. Each game lives in its own directory un
 | Winterhold · The Last Hearth | [games/winterhold](games/winterhold/) | Explore a bright valley, gather supplies, recruit settlers, and defend a growing refuge against the first winter horde. |
 | MBG Evolution | [games/mbg-evolution](games/mbg-evolution/) | A comic kitchen evolution game in Indonesian: hit roaming food, absorb its energy, and discover 12 original creatures, from Ompreng Kosong to Kopdes. |
 | Permisi Paket! | [games/permisi-paket](games/permisi-paket/) | Explore three Indonesian neighborhoods as a courier: deliver packages, follow the minimap, avoid traffic, and upgrade your gear with keyboard or touch controls. |
+| Ternak Zombie · Arus di Kota Mati | [games/ternak-zombie](games/ternak-zombie/) | Guide Raya through an abandoned city, lure zombies into a kinetic generator, and power a shelter through the first night. |
 
 ## Run Mathventures
 
@@ -51,6 +52,16 @@ npm run dev
 
 Permisi Paket! is a mobile-friendly courier adventure with 18 homes, a camera that follows the player through a connected town, a minimap, four upgrade paths, and local progress saves. See the [game README](games/permisi-paket/README.md), [design document](games/permisi-paket/docs/GDD.md), and [deployment guide](games/permisi-paket/docs/DEPLOYMENT.md).
 
+## Run Ternak Zombie
+
+```sh
+cd games/ternak-zombie
+npm ci
+npm run dev
+```
+
+Ternak Zombie is a mobile-friendly city survival game with physical zombie luring, a movement-powered generator, renewable supplies, electric defenses, and a first-night milestone. See its [game README](games/ternak-zombie/README.md), [design document](games/ternak-zombie/docs/GDD.md), and [deployment guide](games/ternak-zombie/docs/DEPLOYMENT.md).
+
 ## Validate and build Mathventures
 
 Run these commands from `games/mathventures/`:
@@ -92,6 +103,14 @@ games/
     package-lock.json
     README.md
   permisi-paket/
+    src/
+    tests/
+    scripts/
+    docs/
+    package.json
+    package-lock.json
+    README.md
+  ternak-zombie/
     src/
     tests/
     scripts/
